@@ -1,0 +1,805 @@
+=========================================
+ CYBERSECURITY COURSE - QUESTION BANK
+=========================================
+
+STAGE STRUCTURE:
+- General Stage: 25 Questions
+- Stage 1: 15 Questions
+- Stage 2: 15 Questions
+- Stage 3: 15 Questions
+- Stage 4: 15 Questions
+- Final Stage: 25 Questions
+
+-----------------------------------------
+ GENERAL STAGE - 25 QUESTIONS
+-----------------------------------------
+
+1. What does 'cybersecurity' aim to protect?
+A) Digital data and systems
+B) Buildings
+C) Hardware only
+D) Internet speed
+Answer: A
+
+2. What is malware?
+A) Malicious software
+B) Network cable
+C) Data backup
+D) System update
+Answer: A
+
+3. What is phishing?
+A) Fraudulent attempts to get sensitive info
+B) Network repair
+C) Virus removal
+D) Software testing
+Answer: A
+
+4. Which one is a strong password?
+A) 123456
+B) Th@raka2025#
+C) password
+D) abcdef
+Answer: B
+
+5. What does HTTPS stand for?
+A) HyperText Transfer Protocol Secure
+B) HighText Transfer Process System
+C) Hyper Transfer Text Secure
+D) None
+Answer: A
+
+6. What’s the purpose of a firewall?
+A) Prevent unauthorized access
+B) Speed up Wi-Fi
+C) Store files
+D) Repair routers
+Answer: A
+
+7. What does VPN mean?
+A) Virtual Private Network
+B) Virtual Public Node
+C) Very Private Net
+D) Verified Personal Network
+Answer: A
+
+8. What does 'update' mean in security context?
+A) Adding new features and fixing bugs
+B) Slowing down apps
+C) Removing files
+D) Formatting drives
+Answer: A
+
+9. What is ransomware?
+A) Malware that encrypts data and demands payment
+B) Antivirus
+C) Backup tool
+D) System cleaner
+Answer: A
+
+10. What is the main purpose of antivirus software?
+A) Detect and remove malware
+B) Block ads
+C) Speed CPU
+D) Share files
+Answer: A
+
+11. What does MFA stand for?
+A) Multi-Factor Authentication
+B) Multi File Access
+C) Master File Authorization
+D) Managed File Agent
+Answer: A
+
+12. What is a data breach?
+A) Unauthorized access to data
+B) File backup
+C) Password reset
+D) Server update
+Answer: A
+
+13. What is encryption?
+A) Converting data into unreadable format
+B) Deleting data
+C) Compressing files
+D) Duplicating data
+Answer: A
+
+14. What is social engineering?
+A) Manipulating people to share info
+B) Software update
+C) Network design
+D) Firewall setup
+Answer: A
+
+15. What is a Trojan?
+A) Malware disguised as legitimate software
+B) Virus scanner
+C) Password tool
+D) Router
+Answer: A
+
+16. Which device can be affected by malware?
+A) Any device with software
+B) Only computers
+C) Only phones
+D) Only servers
+Answer: A
+
+17. What is a DDoS attack?
+A) Overloading a server with traffic
+B) Encrypting data
+C) Blocking users
+D) Uploading files
+Answer: A
+
+18. What is a password manager?
+A) Stores and manages passwords securely
+B) Creates fake passwords
+C) Deletes passwords
+D) Sends passwords
+Answer: A
+
+19. What should you do when you receive a suspicious email?
+A) Don’t click any links or attachments
+B) Forward it to friends
+C) Reply immediately
+D) Ignore spam filter
+Answer: A
+
+20. What is two-factor authentication?
+A) Two steps to verify your identity
+B) Using two passwords
+C) Double login
+D) Multiple devices
+Answer: A
+
+21. Which one is NOT a type of malware?
+A) Worm
+B) Firewall
+C) Trojan
+D) Spyware
+Answer: B
+
+22. What is the main goal of cybersecurity?
+A) Protect data and ensure safe access
+B) Create viruses
+C) Slow systems
+D) Hack devices
+Answer: A
+
+23. What’s a good cybersecurity habit?
+A) Regularly updating software
+B) Ignoring updates
+C) Sharing passwords
+D) Using same password
+Answer: A
+
+24. What is the role of an ethical hacker?
+A) Find vulnerabilities to fix them
+B) Steal data
+C) Spread malware
+D) Bypass security
+Answer: A
+
+25. What is the first step in securing your account?
+A) Create strong, unique passwords
+B) Ignore security alerts
+C) Use simple passwords
+D) Share login with friends
+Answer: A
+
+-----------------------------------------
+ STAGE 1 - 15 QUESTIONS
+-----------------------------------------
+
+1. What is the main goal of a firewall?
+A) Block unauthorized access
+B) Delete malware
+C) Speed up systems
+D) Filter ads
+Answer: A
+
+2. Which of the following is NOT a malware type?
+A) Worm
+B) Virus
+C) Spyware
+D) Patch
+Answer: D
+
+3. What does 'phishing email' try to do?
+A) Steal user data
+B) Speed up internet
+C) Repair servers
+D) Clean cache
+Answer: A
+
+4. What does a strong password include?
+A) Uppercase, lowercase, numbers, symbols
+B) Only lowercase letters
+C) Only numbers
+D) Simple words
+Answer: A
+
+5. What is the safest place to store passwords?
+A) Password manager
+B) Sticky notes
+C) Text file
+D) Email draft
+Answer: A
+
+6. What should you do before clicking a link?
+A) Check if the link is legitimate
+B) Click immediately
+C) Ignore sender
+D) Disable antivirus
+Answer: A
+
+7. Which protocol provides secure communication?
+A) HTTPS
+B) HTTP
+C) FTP
+D) POP3
+Answer: A
+
+8. What’s the first action after detecting malware?
+A) Disconnect internet
+B) Delete random files
+C) Restart system
+D) Ignore it
+Answer: A
+
+9. What is a virus?
+A) Self-replicating malware
+B) Backup tool
+C) Data recovery app
+D) Email client
+Answer: A
+
+10. Which of the following can help prevent phishing?
+A) Awareness training
+B) Clicking links
+C) Ignoring antivirus
+D) Using same passwords
+Answer: A
+
+11. What is a backup?
+A) Copy of data stored separately
+B) Deleted files
+C) Cache memory
+D) Password storage
+Answer: A
+
+12. What is spyware used for?
+A) Secretly monitor user activity
+B) Protect systems
+C) Clean storage
+D) Encrypt data
+Answer: A
+
+13. What is an antivirus program?
+A) Software that detects and removes malware
+B) Backup system
+C) Social app
+D) Email client
+Answer: A
+
+14. What is identity theft?
+A) Using someone’s personal data illegally
+B) Sharing files
+C) Logging out
+D) Hacking websites
+Answer: A
+
+15. What is the best response to a security alert?
+A) Verify and take action
+B) Ignore
+C) Disable notifications
+D) Delete antivirus
+Answer: A
+
+-----------------------------------------
+ STAGE 2 - 15 QUESTIONS
+-----------------------------------------
+
+1. What is a brute force attack?
+A) Trying every password combination
+B) Stealing via email
+C) Bypassing firewall
+D) Using a VPN
+Answer: A
+
+2. What’s an example of social engineering?
+A) Fake tech support call
+B) Installing antivirus
+C) Encrypting data
+D) Using password manager
+Answer: A
+
+3. What’s the safest way to connect to public Wi-Fi?
+A) Use VPN
+B) Connect directly
+C) Disable antivirus
+D) Share network
+Answer: A
+
+4. What does data integrity ensure?
+A) Data is accurate and unchanged
+B) Data is duplicated
+C) Data is deleted
+D) Data is public
+Answer: A
+
+5. What is the meaning of “patch” in cybersecurity?
+A) Software update fixing vulnerabilities
+B) File backup
+C) Malware code
+D) File compression
+Answer: A
+
+6. What’s an example of a physical security measure?
+A) Biometric access control
+B) Password reset
+C) Data encryption
+D) Email alert
+Answer: A
+
+7. What is a botnet?
+A) Group of infected computers controlled remotely
+B) Search engine
+C) Password app
+D) Firewall
+Answer: A
+
+8. What’s the goal of access control?
+A) Restrict access to authorized users
+B) Allow everyone
+C) Encrypt data
+D) Log user activities
+Answer: A
+
+9. What is the principle of “least privilege”?
+A) Giving minimum access necessary
+B) Giving admin access
+C) Blocking all access
+D) Full permissions
+Answer: A
+
+10. What is multi-factor authentication?
+A) Two or more verification steps
+B) Password only
+C) Email login
+D) Single sign-on
+Answer: A
+
+11. What is SQL injection?
+A) Code inserted into a database query to steal info
+B) Backup process
+C) Firewall update
+D) VPN configuration
+Answer: A
+
+12. What does HTTPS protect?
+A) Data during transmission
+B) Local files
+C) Software code
+D) Printers
+Answer: A
+
+13. What is a digital certificate?
+A) Verifies website authenticity
+B) Password file
+C) USB encryption key
+D) Backup log
+Answer: A
+
+14. What is an example of malware propagation?
+A) Worm spreading through network
+B) VPN connection
+C) Firewall monitoring
+D) Email encryption
+Answer: A
+
+15. What is the best way to handle a lost device?
+A) Report and remotely wipe data
+B) Ignore it
+C) Wait for return
+D) Share passwords
+Answer: A
+
+-----------------------------------------
+ STAGE 3 - 15 QUESTIONS
+-----------------------------------------
+
+1. What is a vulnerability?
+A) Weakness that attackers can exploit
+B) Software patch
+C) Security policy
+D) Password manager
+Answer: A
+
+2. What is penetration testing?
+A) Simulated attack to find weaknesses
+B) Antivirus scanning
+C) Software update
+D) Encryption process
+Answer: A
+
+3. What is malware signature?
+A) Unique pattern used to detect malware
+B) Password file
+C) Network log
+D) Encryption key
+Answer: A
+
+4. What is social engineering primarily based on?
+A) Human manipulation
+B) Code injection
+C) Hardware design
+D) Encryption
+Answer: A
+
+5. What is the first step of incident response?
+A) Identification
+B) Eradication
+C) Recovery
+D) Reporting
+Answer: A
+
+6. What is sandboxing?
+A) Testing software in isolated environment
+B) Backup process
+C) Encryption method
+D) Password check
+Answer: A
+
+7. What’s the purpose of hashing?
+A) Verify data integrity
+B) Encrypt data for transfer
+C) Delete files
+D) Compress files
+Answer: A
+
+8. What’s an insider threat?
+A) Threat from within an organization
+B) External hacker
+C) Software bug
+D) Power outage
+Answer: A
+
+9. What is phishing prevention best achieved by?
+A) Awareness and training
+B) Ignoring emails
+C) Software updates only
+D) Changing password weekly
+Answer: A
+
+10. What is data exfiltration?
+A) Unauthorized transfer of data
+B) Backup creation
+C) Data encryption
+D) VPN setup
+Answer: A
+
+11. What is a zero-day attack?
+A) Exploit used before patch is available
+B) Scheduled scan
+C) Fake alert
+D) Server downtime
+Answer: A
+
+12. What is an intrusion detection system (IDS)?
+A) Monitors and alerts suspicious activity
+B) Firewall update
+C) Antivirus installer
+D) Backup service
+Answer: A
+
+13. What is social media phishing called?
+A) Angler phishing
+B) Spear phishing
+C) Whaling
+D) Vishing
+Answer: A
+
+14. What does encryption protect?
+A) Confidentiality of data
+B) Availability only
+C) Hardware components
+D) System speed
+Answer: A
+
+15. What’s the safest data disposal method?
+A) Secure wiping or shredding
+B) Deleting from recycle bin
+C) Formatting drive
+D) Backup and delete
+Answer: A
+
+-----------------------------------------
+ STAGE 4 - 15 QUESTIONS
+-----------------------------------------
+
+1. What does SIEM stand for?
+A) Security Information and Event Management
+B) Secure Input Email Manager
+C) System Integrity Event Monitor
+D) Security Incident Error Module
+Answer: A
+
+2. What’s a honeypot used for?
+A) Trap and study attackers
+B) Backup files
+C) Scan networks
+D) Encrypt data
+Answer: A
+
+3. What’s the difference between IDS and IPS?
+A) IDS detects, IPS prevents
+B) Both are same
+C) IDS blocks, IPS detects
+D) IPS is software only
+Answer: A
+
+4. What’s the main goal of red team operations?
+A) Simulate real attacks to test defenses
+B) Patch systems
+C) Train staff
+D) Backup data
+Answer: A
+
+5. What’s the best protection against ransomware?
+A) Regular backups and updates
+B) Disabling antivirus
+C) Sharing files
+D) Ignoring alerts
+Answer: A
+
+6. What’s the main focus of threat intelligence?
+A) Understanding and predicting cyber threats
+B) Installing antivirus
+C) File compression
+D) Password sharing
+Answer: A
+
+7. What is public key cryptography used for?
+A) Secure data exchange between parties
+B) File compression
+C) Virus scanning
+D) Data deletion
+Answer: A
+
+8. What is a security policy?
+A) Set of rules to protect data and systems
+B) Software license
+C) Backup report
+D) Encryption tool
+Answer: A
+
+9. What is a digital signature?
+A) Verify integrity and authenticity of data
+B) Encrypt files
+C) Backup data
+D) Scan systems
+Answer: A
+
+10. What is the role of an SOC (Security Operations Center)?
+A) Monitor and respond to security incidents
+B) Store data
+C) Manage software licenses
+D) Speed networks
+Answer: A
+
+11. What’s data classification?
+A) Organizing data based on sensitivity
+B) Deleting old data
+C) Encrypting all data
+D) Printing files
+Answer: A
+
+12. What’s the main advantage of cloud security?
+A) Centralized protection for online data
+B) Faster downloads
+C) More local storage
+D) Free antivirus
+Answer: A
+
+13. What is business continuity planning (BCP)?
+A) Ensuring operations continue after disruptions
+B) Data encryption
+C) File backup only
+D) Server installation
+Answer: A
+
+14. What’s ethical hacking?
+A) Authorized testing of systems for security flaws
+B) Unauthorized access
+C) Phishing attempt
+D) Password cracking
+Answer: A
+
+15. What is a threat actor?
+A) Entity responsible for a cyberattack
+B) Antivirus software
+C) Security engineer
+D) Malware scanner
+Answer: A
+
+-----------------------------------------
+ FINAL STAGE - 25 QUESTIONS
+-----------------------------------------
+
+1. Which of the following best defines cybersecurity?
+A) Protecting digital systems and data from attacks
+B) Installing antivirus software
+C) Internet speed optimization
+D) Designing websites
+Answer: A
+
+2. What does the CIA Triad stand for?
+A) Confidentiality, Integrity, Availability
+B) Control, Identity, Audit
+C) Cybersecurity, Integration, Access
+D) Cyber, Internet, Access
+Answer: A
+
+3. What is the main purpose of encryption?
+A) To protect information by making it unreadable
+B) To compress files
+C) To delete malware
+D) To back up data
+Answer: A
+
+4. What is a phishing attack?
+A) An email tricking users into revealing info
+B) A password encryption method
+C) Hardware malfunction
+D) Website design bug
+Answer: A
+
+5. Which protocol is used for secure web communication?
+A) HTTPS
+B) FTP
+C) HTTP
+D) POP3
+Answer: A
+
+6. What is a firewall used for?
+A) Blocking unauthorized access
+B) Cleaning malware
+C) Storing passwords
+D) Speeding network
+Answer: A
+
+7. What is ransomware designed to do?
+A) Encrypt files and demand payment
+B) Steal data silently
+C) Speed up systems
+D) Delete cache
+Answer: A
+
+8. What is a zero-day vulnerability?
+A) Unknown flaw exploited before patching
+B) Firewall issue
+C) Network backup error
+D) Patched bug
+Answer: A
+
+9. What’s an example of multi-factor authentication?
+A) Password + OTP
+B) Username + password
+C) Two passwords
+D) PIN only
+Answer: A
+
+10. What is data exfiltration?
+A) Unauthorized transfer of data
+B) File compression
+C) Password encryption
+D) Authorized backup
+Answer: A
+
+11. What is a honeypot?
+A) Fake system to attract attackers
+B) Encryption software
+C) Real database
+D) Security camera
+Answer: A
+
+12. What’s the primary goal of DLP tools?
+A) Prevent data leaks
+B) Detect malware
+C) Monitor browsing
+D) Encrypt backups
+Answer: A
+
+13. What’s a red team in cybersecurity?
+A) Ethical hackers simulating attacks
+B) Backup admins
+C) Software testers
+D) Customer service
+Answer: A
+
+14. What’s a sign of compromised system?
+A) Slow performance, strange popups
+B) Fast performance
+C) Clean logs
+D) Stable network
+Answer: A
+
+15. What’s the purpose of a digital certificate?
+A) Verify website or user identity
+B) Block viruses
+C) Store passwords
+D) Encrypt USBs
+Answer: A
+
+16. What’s an example of social engineering?
+A) Sending fake emails to steal login data
+B) Installing antivirus
+C) Using VPN
+D) Updating software
+Answer: A
+
+17. What is the main goal of penetration testing?
+A) Detect vulnerabilities before attackers
+B) Monitor employees
+C) Improve Wi-Fi
+D) Block spam
+Answer: A
+
+18. What is data integrity?
+A) Ensuring data is accurate and unaltered
+B) Encrypting files
+C) Backing up data
+D) Compressing folders
+Answer: A
+
+19. What is hashing used for?
+A) Verify data integrity
+B) Delete malware
+C) Backup files
+D) Encrypt USBs
+Answer: A
+
+20. What’s a common phishing prevention method?
+A) Employee awareness training
+B) Ignoring spam
+C) Disabling MFA
+D) Reusing passwords
+Answer: A
+
+21. What is threat modeling?
+A) Identifying and evaluating potential cyber risks
+B) Installing antivirus
+C) Updating OS
+D) Changing passwords
+Answer: A
+
+22. What is cloud security responsible for?
+A) Protecting data stored online
+B) Offline data only
+C) Hardware servers
+D) Internet speed
+Answer: A
+
+23. What’s the main purpose of an SOC?
+A) Monitor and respond to cyber incidents
+B) Create malware
+C) Manage passwords
+D) Block popups
+Answer: A
+
+24. What is incident response?
+A) Organized process for managing cyberattacks
+B) Daily system backup
+C) Installing antivirus
+D) Hardware repair
+Answer: A
+
+25. What’s the meaning of “least privilege”?
+A) Giving users minimum required access
+B) Full access for all
+C) No access
+D) Shared admin rights
+Answer: A
