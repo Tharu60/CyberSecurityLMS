@@ -1,0 +1,66 @@
+/* Swipeable Card Styles */
+
+.swipeable-card-wrapper {
+  position: relative;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.swipeable-card-wrapper:active {
+  cursor: grabbing;
+}
+
+/* Swipe Indicators */
+.swipe-indicator {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 3rem;
+  z-index: 10;
+  pointer-events: none;
+  animation: swipeIndicatorPulse 0.5s ease-in-out infinite;
+}
+
+.swipe-indicator-left {
+  left: -50px;
+  color: #dc3545;
+}
+
+.swipe-indicator-right {
+  right: -50px;
+  color: #28a745;
+}
+
+@keyframes swipeIndicatorPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .swipe-indicator {
+    font-size: 2rem;
+  }
+
+  .swipe-indicator-left {
+    left: -30px;
+  }
+
+  .swipe-indicator-right {
+    right: -30px;
+  }
+}
+
+/* Touch feedback */
+.swipeable-card-wrapper.dragging {
+  opacity: 0.8;
+}
