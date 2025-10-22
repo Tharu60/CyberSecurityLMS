@@ -11,6 +11,7 @@ const Register = () => {
     password: '',
     confirmPassword: '',
     role: 'student',
+    governmentId: '',
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -19,10 +20,34 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    // Format government ID as user types
+    if (name === 'governmentId') {
+      // Remove any existing slash and convert to uppercase
+      let formatted = value.replace('/', '').toUpperCase();
+
+      // Only allow letters and numbers
+      formatted = formatted.replace(/[^A-Z0-9]/g, '');
+
+      // Limit to 9 characters (4 letters + 5 numbers)
+      formatted = formatted.substring(0, 9);
+
+      // Add slash after 4 characters
+      if (formatted.length > 4) {
+        formatted = formatted.substring(0, 4) + '/' + formatted.substring(4);
+      }
+
+      setFormData({
+        ...formData,
+        [name]: formatted,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -40,9 +65,16 @@ const Register = () => {
       return;
     }
 
+    // Validate Government ID format: 4 letters / 5 numbers
+    const govIdRegex = /^[A-Z]{4}\/[0-9]{5}$/;
+    if (!govIdRegex.test(formData.governmentId)) {
+      setError('Government ID must be in the format: XXXX/12345 (4 letters / 5 numbers)');
+      return;
+    }
+
     setLoading(true);
 
-    const result = await register(formData.name, formData.email, formData.password, formData.role);
+    const result = await register(formData.name, formData.email, formData.password, formData.role, formData.governmentId);
 
     if (result.success) {
       // Redirect based on role
@@ -102,6 +134,23 @@ const Register = () => {
                       required
                       disabled={loading}
                     />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3">
+                    <Form.Label>Government ID</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="governmentId"
+                      placeholder="XXXX/12345"
+                      value={formData.governmentId}
+                      onChange={handleChange}
+                      required
+                      disabled={loading}
+                      maxLength={10}
+                    />
+                    <Form.Text className="text-muted">
+                      Format: 4 letters / 5 numbers (e.g., PMAS/25634)
+                    </Form.Text>
                   </Form.Group>
 
                   <Form.Group className="mb-3">

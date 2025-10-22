@@ -13,21 +13,35 @@ const generateToken = (user) => {
 // Register new user
 export const register = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, governmentId } = req.body;
 
     // Validation
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !governmentId) {
       return res.status(400).json({ message: 'Please provide all required fields' });
     }
 
-    // Check if user already exists
+    // Validate Government ID format: 4 letters / 5 numbers
+    const govIdRegex = /^[A-Z]{4}\/[0-9]{5}$/;
+    if (!govIdRegex.test(governmentId)) {
+      return res.status(400).json({
+        message: 'Invalid Government ID format. Must be 4 letters / 5 numbers (e.g., PMAS/25634)'
+      });
+    }
+
+    // Check if user already exists with same email
     const existingUser = await User.findByEmail(email);
     if (existingUser) {
       return res.status(400).json({ message: 'Email already registered' });
     }
 
+    // Check if government ID already exists
+    const existingGovId = await User.findByGovernmentId(governmentId);
+    if (existingGovId) {
+      return res.status(400).json({ message: 'Government ID already registered' });
+    }
+
     // Create user
-    const user = await User.create(name, email, password, role || 'student');
+    const user = await User.create(name, email, password, role || 'student', governmentId);
 
     // Generate token
     const token = generateToken(user);
@@ -39,6 +53,7 @@ export const register = async (req, res) => {
         id: user.id,
         name: user.name,
         email: user.email,
+        governmentId: user.governmentId,
         role: user.role
       }
     });
@@ -103,6 +118,7 @@ export const getProfile = async (req, res) => {
         id: user.id,
         name: user.name,
         email: user.email,
+        governmentId: user.government_id,
         role: user.role,
         created_at: user.created_at
       }

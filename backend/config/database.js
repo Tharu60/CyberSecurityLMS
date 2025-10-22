@@ -24,6 +24,7 @@ function initializeDatabase() {
         name TEXT NOT NULL,
         email TEXT UNIQUE NOT NULL,
         password TEXT NOT NULL,
+        government_id TEXT UNIQUE NOT NULL,
         role TEXT NOT NULL CHECK(role IN ('student', 'instructor', 'admin')),
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP

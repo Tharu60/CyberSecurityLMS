@@ -3,12 +3,12 @@ import bcrypt from 'bcryptjs';
 
 class User {
   // Create a new user
-  static async create(name, email, password, role = 'student') {
+  static async create(name, email, password, role = 'student', governmentId) {
     return new Promise((resolve, reject) => {
       const hashedPassword = bcrypt.hashSync(password, 10);
-      const query = 'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)';
+      const query = 'INSERT INTO users (name, email, password, government_id, role) VALUES (?, ?, ?, ?, ?)';
 
-      db.run(query, [name, email, hashedPassword, role], function(err) {
+      db.run(query, [name, email, hashedPassword, governmentId, role], function(err) {
         if (err) {
           reject(err);
         } else {
@@ -21,12 +21,12 @@ class User {
                 if (progressErr) {
                   reject(progressErr);
                 } else {
-                  resolve({ id: this.lastID, name, email, role });
+                  resolve({ id: this.lastID, name, email, governmentId, role });
                 }
               }
             );
           } else {
-            resolve({ id: this.lastID, name, email, role });
+            resolve({ id: this.lastID, name, email, governmentId, role });
           }
         }
       });
@@ -47,10 +47,24 @@ class User {
     });
   }
 
+  // Find user by government ID
+  static async findByGovernmentId(governmentId) {
+    return new Promise((resolve, reject) => {
+      const query = 'SELECT * FROM users WHERE government_id = ?';
+      db.get(query, [governmentId], (err, row) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(row);
+        }
+      });
+    });
+  }
+
   // Find user by ID
   static async findById(id) {
     return new Promise((resolve, reject) => {
-      const query = 'SELECT id, name, email, role, created_at FROM users WHERE id = ?';
+      const query = 'SELECT id, name, email, government_id, role, created_at FROM users WHERE id = ?';
       db.get(query, [id], (err, row) => {
         if (err) {
           reject(err);
@@ -64,7 +78,7 @@ class User {
   // Get all users (Admin only)
   static async getAll(role = null) {
     return new Promise((resolve, reject) => {
-      let query = 'SELECT id, name, email, role, created_at FROM users';
+      let query = 'SELECT id, name, email, government_id, role, created_at FROM users';
       const params = [];
 
       if (role) {
