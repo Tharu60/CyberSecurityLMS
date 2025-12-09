@@ -3,67 +3,56 @@ import db from '../config/database.js';
 class Stage {
   // Get all stages
   static async getAll() {
-    return new Promise((resolve, reject) => {
+    try {
       const query = 'SELECT * FROM stages ORDER BY stage_number';
-      db.all(query, [], (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(rows);
-        }
-      });
-    });
+      const [rows] = await db.execute(query);
+      return rows;
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Get stage by ID
   static async getById(id) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = 'SELECT * FROM stages WHERE id = ?';
-      db.get(query, [id], (err, row) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(row);
-        }
-      });
-    });
+      const [rows] = await db.execute(query, [id]);
+      return rows[0] || null;
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Get stage by stage number
   static async getByStageNumber(stageNumber) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = 'SELECT * FROM stages WHERE stage_number = ?';
-      db.get(query, [stageNumber], (err, row) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(row);
-        }
-      });
-    });
+      const [rows] = await db.execute(query, [stageNumber]);
+      return rows[0] || null;
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Create stage
   static async create(name, description, stageNumber, totalQuestions, passingScore) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = `
         INSERT INTO stages (name, description, stage_number, total_questions, passing_score)
         VALUES (?, ?, ?, ?, ?)
       `;
 
-      db.run(query, [name, description, stageNumber, totalQuestions, passingScore], function(err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve({ id: this.lastID, name, description, stageNumber, totalQuestions, passingScore });
-        }
-      });
-    });
+      const [result] = await db.execute(query, [name, description, stageNumber, totalQuestions, passingScore]);
+
+      return { id: result.insertId, name, description, stageNumber, totalQuestions, passingScore };
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Update stage
   static async update(id, updates) {
-    return new Promise((resolve, reject) => {
+    try {
       const fields = [];
       const values = [];
 
@@ -87,29 +76,23 @@ class Stage {
       values.push(id);
 
       const query = `UPDATE stages SET ${fields.join(', ')} WHERE id = ?`;
+      const [result] = await db.execute(query, values);
 
-      db.run(query, values, function(err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve({ updated: this.changes > 0 });
-        }
-      });
-    });
+      return { updated: result.affectedRows > 0 };
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Delete stage
   static async delete(id) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = 'DELETE FROM stages WHERE id = ?';
-      db.run(query, [id], function(err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve({ deleted: this.changes > 0 });
-        }
-      });
-    });
+      const [result] = await db.execute(query, [id]);
+      return { deleted: result.affectedRows > 0 };
+    } catch (error) {
+      throw error;
+    }
   }
 }
 

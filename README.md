@@ -4,13 +4,13 @@ A comprehensive Learning Management System designed specifically for Cybersecuri
 
 ## 🚀 Features Implemented
 
-### Backend (Node.js + Express + SQLite)
+### Backend (Node.js + Express + MySQL)
 
 ✅ **Complete Backend API**
 - User authentication with JWT tokens
 - Role-based access control (Student, Instructor, Admin)
 - RESTful API endpoints for all resources
-- SQLite database with complete schema
+- MySQL database with complete schema
 - Password encryption with bcrypt
 - Database seeding with questions and videos
 
@@ -53,7 +53,7 @@ A comprehensive Learning Management System designed specifically for Cybersecuri
 LMS/
 ├── backend/
 │   ├── config/
-│   │   └── database.js          # SQLite database configuration
+│   │   └── database.js          # MySQL database configuration
 │   ├── models/
 │   │   ├── User.js              # User model
 │   │   ├── Stage.js             # Stage model
@@ -142,19 +142,33 @@ cd backend
 npm install
 ```
 
-3. Create `.env` file (already created):
+3. Create MySQL database:
+```bash
+mysql -u root -p
+CREATE DATABASE lms_db;
+exit;
+```
+
+4. Create `.env` file (already created):
 ```
 PORT=5000
 JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
 NODE_ENV=development
+
+# MySQL Configuration
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_mysql_password
+DB_NAME=lms_db
+DB_PORT=3306
 ```
 
-4. Seed the database:
+5. Seed the database:
 ```bash
 npm run seed
 ```
 
-5. Start the server:
+6. Start the server:
 ```bash
 npm run dev
 ```
@@ -375,4 +389,4 @@ ISC
 
 ---
 
-**Built with ❤️ for Cybersecurity Education**
+**Built with ❤️ for Cybersecurity Education using Node.js, React, Express, MySQL, Bootstrap**

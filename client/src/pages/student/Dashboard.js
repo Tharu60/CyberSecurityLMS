@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Button, ProgressBar, Badge, Alert } from 'react-bootstrap';
 import { useAuth } from '../../context/AuthContext';
 import { progressAPI, stageAPI } from '../../services/api';
-import MobileNav from '../../components/MobileNav';
 import '../../styles/Dashboard.css';
 
 const StudentDashboard = () => {
@@ -70,39 +69,6 @@ const StudentDashboard = () => {
 
   return (
     <div className="dashboard-page">
-      {/* Navbar */}
-      <nav className="navbar navbar-dark bg-dark shadow-sm">
-        <Container>
-          <div className="d-flex align-items-center">
-            <MobileNav />
-            <span className="navbar-brand mb-0 h1">
-              <i className="bi bi-shield-lock-fill me-2"></i>
-              <span className="d-none d-md-inline">Cyber Security LMS</span>
-              <span className="d-inline d-md-none">CS LMS</span>
-            </span>
-          </div>
-          <div className="d-flex align-items-center">
-            <Button
-              variant="outline-light"
-              size="sm"
-              className="me-2 d-none d-lg-inline-flex"
-              onClick={() => navigate('/student/progress')}
-            >
-              <i className="bi bi-graph-up me-2"></i>
-              My Progress
-            </Button>
-            <span className="text-white me-3 d-none d-md-inline">
-              <i className="bi bi-person-circle me-2"></i>
-              {user?.name}
-            </span>
-            <Button variant="outline-light" size="sm" className="d-none d-lg-inline-flex" onClick={handleLogout}>
-              <i className="bi bi-box-arrow-right me-2"></i>
-              Logout
-            </Button>
-          </div>
-        </Container>
-      </nav>
-
       <Container className="py-5">
         {error && <Alert variant="danger">{error}</Alert>}
 

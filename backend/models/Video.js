@@ -3,89 +3,68 @@ import db from '../config/database.js';
 class Video {
   // Get all videos for a stage
   static async getByStage(stageId) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = 'SELECT * FROM videos WHERE stage_id = ? ORDER BY order_number, id';
-      db.all(query, [stageId], (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(rows);
-        }
-      });
-    });
+      const [rows] = await db.execute(query, [stageId]);
+      return rows;
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Get video by ID
   static async getById(id) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = 'SELECT * FROM videos WHERE id = ?';
-      db.get(query, [id], (err, row) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(row);
-        }
-      });
-    });
+      const [rows] = await db.execute(query, [id]);
+      return rows[0] || null;
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Create video
   static async create(stageId, title, url, description = '', orderNumber = null) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = `
         INSERT INTO videos (stage_id, title, url, description, order_number)
         VALUES (?, ?, ?, ?, ?)
       `;
 
-      db.run(query, [stageId, title, url, description, orderNumber], function(err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve({ id: this.lastID, stageId, title, url });
-        }
-      });
-    });
+      const [result] = await db.execute(query, [stageId, title, url, description, orderNumber]);
+
+      return { id: result.insertId, stageId, title, url };
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Bulk create videos
   static async bulkCreate(videos) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = `
         INSERT INTO videos (stage_id, title, url, description, order_number)
         VALUES (?, ?, ?, ?, ?)
       `;
 
-      db.serialize(() => {
-        const stmt = db.prepare(query);
-        let insertedCount = 0;
+      let insertedCount = 0;
+      for (const v of videos) {
+        await db.execute(
+          query,
+          [v.stageId, v.title, v.url, v.description || '', v.orderNumber || null]
+        );
+        insertedCount++;
+      }
 
-        videos.forEach((v) => {
-          stmt.run(
-            [v.stageId, v.title, v.url, v.description || '', v.orderNumber || null],
-            (err) => {
-              if (err) {
-                console.error('Error inserting video:', err);
-              } else {
-                insertedCount++;
-              }
-            }
-          );
-        });
-
-        stmt.finalize((err) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve({ inserted: insertedCount });
-          }
-        });
-      });
-    });
+      return { inserted: insertedCount };
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Update video
   static async update(id, updates) {
-    return new Promise((resolve, reject) => {
+    try {
       const fields = [];
       const values = [];
 
@@ -109,43 +88,34 @@ class Video {
       values.push(id);
 
       const query = `UPDATE videos SET ${fields.join(', ')} WHERE id = ?`;
+      const [result] = await db.execute(query, values);
 
-      db.run(query, values, function(err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve({ updated: this.changes > 0 });
-        }
-      });
-    });
+      return { updated: result.affectedRows > 0 };
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Delete video
   static async delete(id) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = 'DELETE FROM videos WHERE id = ?';
-      db.run(query, [id], function(err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve({ deleted: this.changes > 0 });
-        }
-      });
-    });
+      const [result] = await db.execute(query, [id]);
+      return { deleted: result.affectedRows > 0 };
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Get all videos
   static async getAll() {
-    return new Promise((resolve, reject) => {
+    try {
       const query = 'SELECT * FROM videos ORDER BY stage_id, order_number, id';
-      db.all(query, [], (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(rows);
-        }
-      });
-    });
+      const [rows] = await db.execute(query);
+      return rows;
+    } catch (error) {
+      throw error;
+    }
   }
 }
 

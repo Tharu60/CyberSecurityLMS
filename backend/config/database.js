@@ -1,135 +1,139 @@
-import sqlite3 from 'sqlite3';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import mysql from 'mysql2/promise';
+import dotenv from 'dotenv';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+dotenv.config();
 
-const db = new sqlite3.Database(join(__dirname, '..', 'lms.db'), (err) => {
-  if (err) {
-    console.error('Error opening database:', err.message);
-  } else {
-    console.log('Connected to SQLite database');
-    initializeDatabase();
-  }
+// Create connection pool
+const pool = mysql.createPool({
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_NAME || 'lms_db',
+  port: process.env.DB_PORT || 3306,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-// Initialize database tables
-function initializeDatabase() {
-  db.serialize(() => {
-    // Users table
-    db.run(`
+// Test connection and initialize database
+async function initializeDatabase() {
+  try {
+    const connection = await pool.getConnection();
+    console.log('Connected to MySQL database');
+
+    // Create tables
+    await connection.query(`
       CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        email TEXT UNIQUE NOT NULL,
-        password TEXT NOT NULL,
-        government_id TEXT UNIQUE NOT NULL,
-        role TEXT NOT NULL CHECK(role IN ('student', 'instructor', 'admin')),
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        name VARCHAR(255) NOT NULL,
+        email VARCHAR(255) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        government_id VARCHAR(100) UNIQUE NOT NULL,
+        role ENUM('student', 'instructor', 'admin') NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
       )
     `);
 
-    // Stages table
-    db.run(`
+    await connection.query(`
       CREATE TABLE IF NOT EXISTS stages (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        name VARCHAR(255) NOT NULL,
         description TEXT,
-        stage_number INTEGER NOT NULL,
-        total_questions INTEGER NOT NULL,
-        passing_score INTEGER NOT NULL,
+        stage_number INT NOT NULL,
+        total_questions INT NOT NULL,
+        passing_score INT NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
 
-    // Questions table
-    db.run(`
+    await connection.query(`
       CREATE TABLE IF NOT EXISTS questions (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        stage_id INTEGER NOT NULL,
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        stage_id INT NOT NULL,
         question_text TEXT NOT NULL,
         option_a TEXT NOT NULL,
         option_b TEXT NOT NULL,
         option_c TEXT NOT NULL,
         option_d TEXT NOT NULL,
-        correct_answer TEXT NOT NULL CHECK(correct_answer IN ('A', 'B', 'C', 'D')),
+        correct_answer ENUM('A', 'B', 'C', 'D') NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (stage_id) REFERENCES stages(id)
+        FOREIGN KEY (stage_id) REFERENCES stages(id) ON DELETE CASCADE
       )
     `);
 
-    // Videos table
-    db.run(`
+    await connection.query(`
       CREATE TABLE IF NOT EXISTS videos (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        stage_id INTEGER NOT NULL,
-        title TEXT NOT NULL,
-        url TEXT NOT NULL,
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        stage_id INT NOT NULL,
+        title VARCHAR(255) NOT NULL,
+        url VARCHAR(500) NOT NULL,
         description TEXT,
-        order_number INTEGER,
+        order_number INT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (stage_id) REFERENCES stages(id)
+        FOREIGN KEY (stage_id) REFERENCES stages(id) ON DELETE CASCADE
       )
     `);
 
-    // User Progress table
-    db.run(`
+    await connection.query(`
       CREATE TABLE IF NOT EXISTS user_progress (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id INTEGER NOT NULL,
-        current_stage INTEGER DEFAULT 0,
-        initial_assessment_completed BOOLEAN DEFAULT 0,
-        initial_assessment_score INTEGER,
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        user_id INT NOT NULL,
+        current_stage INT DEFAULT 0,
+        initial_assessment_completed TINYINT(1) DEFAULT 0,
+        initial_assessment_score INT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES users(id)
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
       )
     `);
 
-    // Stage Results table
-    db.run(`
+    await connection.query(`
       CREATE TABLE IF NOT EXISTS stage_results (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id INTEGER NOT NULL,
-        stage_id INTEGER NOT NULL,
-        score INTEGER NOT NULL,
-        total_questions INTEGER NOT NULL,
-        passed BOOLEAN NOT NULL,
-        attempt_number INTEGER DEFAULT 1,
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        user_id INT NOT NULL,
+        stage_id INT NOT NULL,
+        score INT NOT NULL,
+        total_questions INT NOT NULL,
+        passed TINYINT(1) NOT NULL,
+        attempt_number INT DEFAULT 1,
         completed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES users(id),
-        FOREIGN KEY (stage_id) REFERENCES stages(id)
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        FOREIGN KEY (stage_id) REFERENCES stages(id) ON DELETE CASCADE
       )
     `);
 
-    // Video Progress table
-    db.run(`
+    await connection.query(`
       CREATE TABLE IF NOT EXISTS video_progress (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id INTEGER NOT NULL,
-        video_id INTEGER NOT NULL,
-        completed BOOLEAN DEFAULT 0,
-        last_watched_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES users(id),
-        FOREIGN KEY (video_id) REFERENCES videos(id)
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        user_id INT NOT NULL,
+        video_id INT NOT NULL,
+        completed TINYINT(1) DEFAULT 0,
+        last_watched_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        FOREIGN KEY (video_id) REFERENCES videos(id) ON DELETE CASCADE
       )
     `);
 
-    // Certificates table
-    db.run(`
+    await connection.query(`
       CREATE TABLE IF NOT EXISTS certificates (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id INTEGER NOT NULL,
-        certificate_code TEXT UNIQUE NOT NULL,
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        user_id INT NOT NULL,
+        certificate_code VARCHAR(255) UNIQUE NOT NULL,
         issued_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES users(id)
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
       )
     `);
 
     console.log('Database tables initialized');
-  });
+    connection.release();
+  } catch (error) {
+    console.error('Error initializing database:', error.message);
+    throw error;
+  }
 }
 
-export default db;
+// Initialize on startup
+initializeDatabase().catch(console.error);
+
+export default pool;

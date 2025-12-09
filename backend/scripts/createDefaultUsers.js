@@ -9,7 +9,8 @@ async function createDefaultUsers() {
       'Admin User',
       'admin@lms.com',
       'admin123',
-      'admin'
+      'admin',
+      'ADMIN-00001'
     );
     console.log('✓ Admin User created:');
     console.log('  Email: admin@lms.com');
@@ -20,7 +21,8 @@ async function createDefaultUsers() {
       'John Instructor',
       'instructor@lms.com',
       'instructor123',
-      'instructor'
+      'instructor',
+      'INST-00001'
     );
     console.log('✓ Instructor User created:');
     console.log('  Email: instructor@lms.com');
@@ -31,7 +33,8 @@ async function createDefaultUsers() {
       'Jane Student',
       'student@lms.com',
       'student123',
-      'student'
+      'student',
+      'STUD-00001'
     );
     console.log('✓ Student User created:');
     console.log('  Email: student@lms.com');

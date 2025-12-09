@@ -4,80 +4,63 @@ import bcrypt from 'bcryptjs';
 class User {
   // Create a new user
   static async create(name, email, password, role = 'student', governmentId) {
-    return new Promise((resolve, reject) => {
+    try {
       const hashedPassword = bcrypt.hashSync(password, 10);
       const query = 'INSERT INTO users (name, email, password, government_id, role) VALUES (?, ?, ?, ?, ?)';
 
-      db.run(query, [name, email, hashedPassword, governmentId, role], function(err) {
-        if (err) {
-          reject(err);
-        } else {
-          // Create initial user progress for students
-          if (role === 'student') {
-            db.run(
-              'INSERT INTO user_progress (user_id, current_stage, initial_assessment_completed) VALUES (?, ?, ?)',
-              [this.lastID, 0, 0],
-              (progressErr) => {
-                if (progressErr) {
-                  reject(progressErr);
-                } else {
-                  resolve({ id: this.lastID, name, email, governmentId, role });
-                }
-              }
-            );
-          } else {
-            resolve({ id: this.lastID, name, email, governmentId, role });
-          }
-        }
-      });
-    });
+      const [result] = await db.execute(query, [name, email, hashedPassword, governmentId, role]);
+      const userId = result.insertId;
+
+      // Create initial user progress for students
+      if (role === 'student') {
+        await db.execute(
+          'INSERT INTO user_progress (user_id, current_stage, initial_assessment_completed) VALUES (?, ?, ?)',
+          [userId, 0, 0]
+        );
+      }
+
+      return { id: userId, name, email, governmentId, role };
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Find user by email
   static async findByEmail(email) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = 'SELECT * FROM users WHERE email = ?';
-      db.get(query, [email], (err, row) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(row);
-        }
-      });
-    });
+      const [rows] = await db.execute(query, [email]);
+      return rows[0] || null;
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Find user by government ID
   static async findByGovernmentId(governmentId) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = 'SELECT * FROM users WHERE government_id = ?';
-      db.get(query, [governmentId], (err, row) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(row);
-        }
-      });
-    });
+      const [rows] = await db.execute(query, [governmentId]);
+      return rows[0] || null;
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Find user by ID
   static async findById(id) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = 'SELECT id, name, email, government_id, role, created_at FROM users WHERE id = ?';
-      db.get(query, [id], (err, row) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(row);
-        }
-      });
-    });
+      const [rows] = await db.execute(query, [id]);
+      return rows[0] || null;
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Get all users (Admin only)
   static async getAll(role = null) {
-    return new Promise((resolve, reject) => {
+    try {
       let query = 'SELECT id, name, email, government_id, role, created_at FROM users';
       const params = [];
 
@@ -86,14 +69,11 @@ class User {
         params.push(role);
       }
 
-      db.all(query, params, (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(rows);
-        }
-      });
-    });
+      const [rows] = await db.execute(query, params);
+      return rows;
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Verify password
@@ -103,7 +83,7 @@ class User {
 
   // Update user
   static async update(id, updates) {
-    return new Promise((resolve, reject) => {
+    try {
       const fields = [];
       const values = [];
 
@@ -124,29 +104,23 @@ class User {
       values.push(id);
 
       const query = `UPDATE users SET ${fields.join(', ')} WHERE id = ?`;
+      const [result] = await db.execute(query, values);
 
-      db.run(query, values, function(err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve({ updated: this.changes > 0 });
-        }
-      });
-    });
+      return { updated: result.affectedRows > 0 };
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Delete user
   static async delete(id) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = 'DELETE FROM users WHERE id = ?';
-      db.run(query, [id], function(err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve({ deleted: this.changes > 0 });
-        }
-      });
-    });
+      const [result] = await db.execute(query, [id]);
+      return { deleted: result.affectedRows > 0 };
+    } catch (error) {
+      throw error;
+    }
   }
 }
 

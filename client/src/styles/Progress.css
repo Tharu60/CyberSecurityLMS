@@ -1,53 +1,495 @@
-/* Progress Page Styles */
+/* ========================================
+   MODERN PROGRESS ANALYTICS
+   Design: Interactive Charts + Statistics
+======================================== */
+
 .progress-page {
   min-height: 100vh;
-  background: #f8f9fa;
-}
-
-.chart-container {
+  background: linear-gradient(135deg, #f8f9fe 0%, #fef5ff 100%);
   position: relative;
-  height: 300px;
-  padding: 1rem;
 }
 
-.stat-card {
-  transition: all 0.3s ease;
-  border: none;
+/* Decorative Background */
+.progress-page::before {
+  content: '';
+  position: fixed;
+  top: -30%;
+  right: -15%;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.04) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: float 25s ease-in-out infinite;
+  pointer-events: none;
 }
 
-.stat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+/* Page Header */
+.progress-header {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md);
+  border-left: 6px solid;
+  border-image: var(--primary-gradient) 1;
+  animation: slideIn 0.6s ease-out;
 }
 
-.stat-card i {
-  animation: pulse 2s infinite;
+.progress-header h1 {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+/* Modern Metric Cards */
+.metric-card {
+  position: relative;
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  animation: scaleIn 0.5s ease-out;
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--primary-gradient);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: var(--shadow-xl);
+}
+
+.metric-card:hover::before {
+  opacity: 1;
+}
+
+.metric-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 18px;
+  background: var(--primary-gradient);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+  animation: pulse 3s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+
+.metric-card:hover .metric-icon {
+  transform: scale(1.1) rotate(5deg);
 }
 
 @keyframes pulse {
   0%, 100% {
-    transform: scale(1);
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
   }
   50% {
-    transform: scale(1.05);
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.5);
   }
 }
 
-/* Table Enhancements */
-.table-hover tbody tr:hover {
-  background-color: #f8f9fa;
+.metric-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.metric-label {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.metric-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.metric-change.positive {
+  background: linear-gradient(135deg, #f0fff4 0%, #e6ffed 100%);
+  color: #22c55e;
+}
+
+.metric-change.negative {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  color: #ef4444;
+}
+
+.metric-change i {
+  font-size: 1rem;
+}
+
+/* Chart Cards with Modern Design */
+.chart-card {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeIn 0.6s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.chart-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.chart-card:hover::before {
+  opacity: 1;
+}
+
+.chart-card .card-header {
+  background: transparent;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.chart-card .card-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.chart-card .card-title i {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-gradient);
+  color: white;
+  border-radius: 10px;
+  font-size: 1.1rem;
+}
+
+.chart-container {
+  position: relative;
+  height: 350px;
+  padding: 1.5rem;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.chart-container canvas {
+  animation: scaleIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Legend Styling */
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #e2e8f0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #f8f9fe;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.legend-item:hover {
+  background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);
+  transform: translateY(-2px);
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+/* Progress Stats Table */
+.stats-table {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.stats-table table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
+}
+
+.stats-table thead th {
+  background: linear-gradient(135deg, #f8f9fe 0%, #ffffff 100%);
+  color: var(--text-primary);
+  font-weight: 700;
+  padding: 1rem 1.5rem;
+  text-align: left;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.stats-table tbody tr {
+  background: white;
+  transition: all 0.3s ease;
+  border-radius: var(--radius-md);
+}
+
+.stats-table tbody tr:hover {
+  background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
   cursor: pointer;
 }
 
-/* Chart Cards */
-.card-header {
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-  border-bottom: 2px solid #e9ecef;
+.stats-table tbody td {
+  padding: 1.25rem 1.5rem;
+  color: var(--text-primary);
+  font-weight: 500;
+  border-top: 1px solid #e2e8f0;
 }
 
-/* Responsive Charts */
+.stats-table tbody tr:first-child td {
+  border-top: none;
+}
+
+/* Performance Badge */
+.performance-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.performance-badge.excellent {
+  background: var(--success-gradient);
+  color: white;
+}
+
+.performance-badge.good {
+  background: var(--info-gradient);
+  color: white;
+}
+
+.performance-badge.average {
+  background: var(--warning-gradient);
+  color: white;
+}
+
+.performance-badge.poor {
+  background: var(--danger-gradient);
+  color: white;
+}
+
+/* Score Circle */
+.score-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.score-circle::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  z-index: -1;
+}
+
+.score-circle.pass {
+  color: #22c55e;
+}
+
+.score-circle.fail {
+  color: #ef4444;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.empty-state-icon {
+  font-size: 5rem;
+  color: #cbd5e0;
+  margin-bottom: 1.5rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+.empty-state-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.empty-state-text {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 500px;
+  margin: 0 auto 2rem;
+}
+
+/* Staggered Animations */
+.metric-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.metric-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.metric-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.metric-card:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.chart-card:nth-child(1) {
+  animation-delay: 0.3s;
+}
+
+.chart-card:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.chart-card:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .chart-container {
+    height: 300px;
+  }
+
+  .metric-card {
+    padding: 1.5rem;
+  }
+
+  .metric-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 1.75rem;
+  }
+
+  .metric-value {
+    font-size: 2rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .progress-header {
+    padding: 1.5rem;
+  }
+
   .chart-container {
     height: 250px;
+    padding: 0.5rem;
+  }
+
+  .metric-card {
+    padding: 1.25rem;
+  }
+
+  .metric-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .metric-value {
+    font-size: 1.75rem;
+  }
+
+  .chart-card {
+    padding: 1.5rem;
+  }
+
+  .stats-table {
+    overflow-x: auto;
+  }
+
+  .stats-table table {
+    min-width: 600px;
+  }
+
+  .empty-state {
+    padding: 3rem 1rem;
+  }
+
+  .empty-state-icon {
+    font-size: 3.5rem;
   }
 }

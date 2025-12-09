@@ -302,26 +302,6 @@ const Progress = () => {
 
   return (
     <div style={{ minHeight: '100vh', background: '#f8f9fa' }}>
-      {/* Navbar */}
-      <nav className="navbar navbar-dark bg-dark shadow-sm">
-        <Container>
-          <span className="navbar-brand mb-0 h1">
-            <i className="bi bi-shield-lock-fill me-2"></i>
-            Cyber Security LMS
-          </span>
-          <div className="d-flex align-items-center">
-            <Button variant="outline-light" size="sm" className="me-2" onClick={() => navigate('/student/dashboard')}>
-              <i className="bi bi-house me-2"></i>
-              Dashboard
-            </Button>
-            <Button variant="outline-light" size="sm" onClick={handleLogout}>
-              <i className="bi bi-box-arrow-right me-2"></i>
-              Logout
-            </Button>
-          </div>
-        </Container>
-      </nav>
-
       <Container className="py-5">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <div>

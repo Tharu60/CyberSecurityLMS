@@ -2,10 +2,15 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
+import Navbar from './components/Navbar';
+import ChatBot from './components/ChatBot';
 
 // Pages
 import Login from './pages/Login';
 import Register from './pages/Register';
+import About from './pages/About';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 import StudentDashboard from './pages/student/Dashboard';
 import StudentProgress from './pages/student/Progress';
 import Certificate from './pages/student/Certificate';
@@ -26,10 +31,14 @@ function App() {
   return (
     <AuthProvider>
       <Router>
+        <Navbar />
         <Routes>
           {/* Public routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
 
           {/* Student routes */}
@@ -106,6 +115,7 @@ function App() {
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
+        <ChatBot />
       </Router>
     </AuthProvider>
   );

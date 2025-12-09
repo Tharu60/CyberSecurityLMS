@@ -8,7 +8,7 @@ Your Cyber Security Learning Management System is **96% complete** with a fully 
 
 ### Backend (100% Complete)
 - ✅ Full RESTful API with Node.js + Express (35+ endpoints)
-- ✅ SQLite database with 8 tables
+- ✅ MySQL database with 8 tables
 - ✅ JWT authentication with bcrypt password hashing
 - ✅ Role-based access control (Student, Instructor, Admin)
 - ✅ 110 cybersecurity questions imported across 6 stages
@@ -42,6 +42,7 @@ Your Cyber Security Learning Management System is **96% complete** with a fully 
 ### Prerequisites
 - Node.js (v14 or higher)
 - npm (comes with Node.js)
+- MySQL (v5.7 or higher)
 
 ### 1. Install Dependencies
 
@@ -57,7 +58,32 @@ cd client
 npm install
 ```
 
-### 2. Seed the Database
+### 2. Configure MySQL Database
+
+**Create MySQL Database:**
+```bash
+# Login to MySQL
+mysql -u root -p
+
+# Create database
+CREATE DATABASE lms_db;
+
+# Exit MySQL
+exit;
+```
+
+**Configure Environment Variables:**
+
+Edit `backend/.env` and set your MySQL credentials:
+```env
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_mysql_password
+DB_NAME=lms_db
+DB_PORT=3306
+```
+
+### 3. Seed the Database
 
 ```bash
 cd backend
@@ -75,7 +101,7 @@ You should see:
 ╚═══════════════════════════════════════════╝
 ```
 
-### 3. Create Default Users
+### 4. Create Default Users
 
 ```bash
 cd backend
@@ -87,7 +113,7 @@ This creates three test accounts:
 - **Instructor:** instructor@lms.com / instructor123
 - **Student:** student@lms.com / student123
 
-### 4. Start the Backend Server
+### 5. Start the Backend Server
 
 ```bash
 cd backend
@@ -106,7 +132,7 @@ You should see:
 ╚═══════════════════════════════════════════╝
 ```
 
-### 5. Start the Frontend (New Terminal)
+### 6. Start the Frontend (New Terminal)
 
 ```bash
 cd client
@@ -264,8 +290,11 @@ The app will automatically open at **http://localhost:3000**
 ### View Database Contents
 
 ```bash
-cd backend
-sqlite3 lms.db
+# Login to MySQL
+mysql -u root -p
+
+# Use the database
+USE lms_db;
 
 # Check users
 SELECT id, name, email, role FROM users;
@@ -280,15 +309,18 @@ SELECT stage_id, COUNT(*) as count FROM questions GROUP BY stage_id;
 SELECT id, title, stage_id FROM videos;
 
 # Exit
-.exit
+exit;
 ```
 
 ### Reset Database
 
 To start fresh:
 ```bash
+# Drop and recreate database
+mysql -u root -p -e "DROP DATABASE IF EXISTS lms_db; CREATE DATABASE lms_db;"
+
+# Reseed
 cd backend
-rm lms.db
 npm run seed
 node scripts/createDefaultUsers.js
 ```
@@ -301,6 +333,13 @@ File: `backend/.env`
 PORT=5000
 JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
 NODE_ENV=development
+
+# MySQL Database Configuration
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_mysql_password
+DB_NAME=lms_db
+DB_PORT=3306
 ```
 
 ### Frontend API Configuration
@@ -355,9 +394,11 @@ npm start
 
 ### Database errors
 ```bash
-# Delete and recreate database
+# Drop and recreate database
+mysql -u root -p -e "DROP DATABASE IF EXISTS lms_db; CREATE DATABASE lms_db;"
+
+# Reseed
 cd backend
-rm lms.db
 npm run seed
 node scripts/createDefaultUsers.js
 ```
@@ -400,8 +441,8 @@ node scripts/createDefaultUsers.js
 - Chart.js uses canvas for performance
 
 ### Backend
-- SQLite is perfect for development
-- For production, consider PostgreSQL
+- MySQL is configured for both development and production
+- Connection pooling is enabled for optimal performance
 - API responses are already optimized
 - JWT tokens are lightweight
 
@@ -413,8 +454,12 @@ node scripts/createDefaultUsers.js
 JWT_SECRET=generate_strong_secret_here
 NODE_ENV=production
 
-# For PostgreSQL in production
-# Update database.js to use PostgreSQL
+# MySQL production settings
+DB_HOST=your_production_mysql_host
+DB_USER=your_production_user
+DB_PASSWORD=your_production_password
+DB_NAME=lms_db
+DB_PORT=3306
 ```
 
 ### Frontend (Vercel/Netlify)
@@ -551,4 +596,4 @@ You now have a **production-ready Learning Management System** for cybersecurity
 
 ---
 
-Made with ❤️ using Node.js, React, Express, SQLite, Bootstrap, and Chart.js
+Made with ❤️ using Node.js, React, Express, MySQL, Bootstrap, and Chart.js

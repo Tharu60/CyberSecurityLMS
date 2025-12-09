@@ -3,7 +3,7 @@ import db from '../config/database.js';
 class Progress {
   // Get user progress
   static async getUserProgress(userId) {
-    return new Promise((resolve, reject) => {
+    try {
       const query = `
         SELECT up.*,
                COUNT(DISTINCT sr.stage_id) as completed_stages,
@@ -14,19 +14,16 @@ class Progress {
         GROUP BY up.id
       `;
 
-      db.get(query, [userId], (err, row) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(row);
-        }
-      });
-    });
+      const [rows] = await db.execute(query, [userId]);
+      return rows[0] || null;
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Update initial assessment
   static async updateInitialAssessment(userId, score, totalQuestions) {
-    return new Promise((resolve, reject) => {
+    try {
       // Determine starting stage based on score percentage
       const percentage = (score / totalQuestions) * 100;
       let startingStage = 1;
@@ -48,66 +45,50 @@ class Progress {
         WHERE user_id = ?
       `;
 
-      db.run(query, [score, startingStage, userId], function(err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve({ startingStage, score, percentage });
-        }
-      });
-    });
+      await db.execute(query, [score, startingStage, userId]);
+
+      return { startingStage, score, percentage };
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Save stage result
   static async saveStageResult(userId, stageId, score, totalQuestions, passed) {
-    return new Promise((resolve, reject) => {
+    try {
       // Get attempt number
-      db.get(
+      const [countRows] = await db.execute(
         'SELECT COUNT(*) as attempts FROM stage_results WHERE user_id = ? AND stage_id = ?',
-        [userId, stageId],
-        (err, row) => {
-          if (err) {
-            reject(err);
-            return;
-          }
-
-          const attemptNumber = (row.attempts || 0) + 1;
-
-          const query = `
-            INSERT INTO stage_results (user_id, stage_id, score, total_questions, passed, attempt_number)
-            VALUES (?, ?, ?, ?, ?, ?)
-          `;
-
-          db.run(query, [userId, stageId, score, totalQuestions, passed ? 1 : 0, attemptNumber], function(insertErr) {
-            if (insertErr) {
-              reject(insertErr);
-            } else {
-              // If passed, update current stage
-              if (passed) {
-                db.run(
-                  'UPDATE user_progress SET current_stage = ?, updated_at = CURRENT_TIMESTAMP WHERE user_id = ?',
-                  [stageId, userId],
-                  (updateErr) => {
-                    if (updateErr) {
-                      reject(updateErr);
-                    } else {
-                      resolve({ id: this.lastID, attemptNumber, passed });
-                    }
-                  }
-                );
-              } else {
-                resolve({ id: this.lastID, attemptNumber, passed });
-              }
-            }
-          });
-        }
+        [userId, stageId]
       );
-    });
+
+      const attemptNumber = (countRows[0].attempts || 0) + 1;
+
+      const query = `
+        INSERT INTO stage_results (user_id, stage_id, score, total_questions, passed, attempt_number)
+        VALUES (?, ?, ?, ?, ?, ?)
+      `;
+
+      const [result] = await db.execute(query, [userId, stageId, score, totalQuestions, passed ? 1 : 0, attemptNumber]);
+      const resultId = result.insertId;
+
+      // If passed, update current stage
+      if (passed) {
+        await db.execute(
+          'UPDATE user_progress SET current_stage = ?, updated_at = CURRENT_TIMESTAMP WHERE user_id = ?',
+          [stageId, userId]
+        );
+      }
+
+      return { id: resultId, attemptNumber, passed };
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Get stage results for a user
   static async getStageResults(userId, stageId = null) {
-    return new Promise((resolve, reject) => {
+    try {
       let query = `
         SELECT sr.*, s.name as stage_name, s.stage_number
         FROM stage_results sr
@@ -123,58 +104,45 @@ class Progress {
 
       query += ' ORDER BY sr.completed_at DESC';
 
-      db.all(query, params, (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(rows);
-        }
-      });
-    });
+      const [rows] = await db.execute(query, params);
+      return rows;
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Mark video as completed
   static async markVideoCompleted(userId, videoId) {
-    return new Promise((resolve, reject) => {
+    try {
       // Check if already exists
-      db.get(
+      const [existingRows] = await db.execute(
         'SELECT id FROM video_progress WHERE user_id = ? AND video_id = ?',
-        [userId, videoId],
-        (err, row) => {
-          if (err) {
-            reject(err);
-            return;
-          }
-
-          if (row) {
-            // Update existing
-            db.run(
-              'UPDATE video_progress SET completed = 1, last_watched_at = CURRENT_TIMESTAMP WHERE id = ?',
-              [row.id],
-              (updateErr) => {
-                if (updateErr) reject(updateErr);
-                else resolve({ updated: true });
-              }
-            );
-          } else {
-            // Insert new
-            db.run(
-              'INSERT INTO video_progress (user_id, video_id, completed) VALUES (?, ?, 1)',
-              [userId, videoId],
-              function(insertErr) {
-                if (insertErr) reject(insertErr);
-                else resolve({ id: this.lastID });
-              }
-            );
-          }
-        }
+        [userId, videoId]
       );
-    });
+
+      if (existingRows.length > 0) {
+        // Update existing
+        await db.execute(
+          'UPDATE video_progress SET completed = 1, last_watched_at = CURRENT_TIMESTAMP WHERE id = ?',
+          [existingRows[0].id]
+        );
+        return { updated: true };
+      } else {
+        // Insert new
+        const [result] = await db.execute(
+          'INSERT INTO video_progress (user_id, video_id, completed) VALUES (?, ?, 1)',
+          [userId, videoId]
+        );
+        return { id: result.insertId };
+      }
+    } catch (error) {
+      throw error;
+    }
   }
 
   // Get video progress for user
   static async getVideoProgress(userId, stageId = null) {
-    return new Promise((resolve, reject) => {
+    try {
       let query = `
         SELECT vp.*, v.title, v.stage_id
         FROM video_progress vp
@@ -188,14 +156,11 @@ class Progress {
         params.push(stageId);
       }
 
-      db.all(query, params, (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(rows);
-        }
-      });
-    });
+      const [rows] = await db.execute(query, params);
+      return rows;
+    } catch (error) {
+      throw error;
+    }
   }
 }
 
