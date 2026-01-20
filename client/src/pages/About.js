@@ -1,63 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
+import LanguageToggle from '../components/LanguageToggle';
+import { translations } from '../data/translations';
 import '../styles/About.css';
 
 const About = () => {
-  const features = [
-    {
-      icon: 'bi-shield-check',
-      title: 'Comprehensive Security Training',
-      description: 'Learn from beginner to expert level with our structured 6-stage curriculum covering all aspects of cybersecurity.'
-    },
-    {
-      icon: 'bi-graph-up-arrow',
-      title: 'Progressive Learning Path',
-      description: 'Start at your skill level with our initial assessment and progress through stages tailored to your knowledge.'
-    },
-    {
-      icon: 'bi-trophy',
-      title: 'Certification',
-      description: 'Earn a verified certificate upon completion of all stages, showcasing your cybersecurity expertise.'
-    },
-    {
-      icon: 'bi-people',
-      title: 'Expert Instructors',
-      description: 'Learn from industry professionals with years of experience in cybersecurity and ethical hacking.'
-    },
-    {
-      icon: 'bi-laptop',
-      title: 'Hands-on Learning',
-      description: 'Practice with real-world scenarios, video tutorials, and interactive assessments.'
-    },
-    {
-      icon: 'bi-clock-history',
-      title: 'Learn at Your Pace',
-      description: 'Self-paced learning platform that fits your schedule with 24/7 access to all course materials.'
-    }
+  const [language, setLanguage] = useState('en');
+  const t = translations[language].about;
+
+  const featureIcons = [
+    'bi-shield-check',
+    'bi-graph-up-arrow',
+    'bi-trophy',
+    'bi-people',
+    'bi-laptop',
+    'bi-clock-history'
   ];
 
   const stats = [
-    { number: '110+', label: 'Questions' },
-    { number: '6', label: 'Stages' },
-    { number: '8+', label: 'Video Lessons' },
-    { number: '100%', label: 'Online' }
+    { number: '110+', label: t.stats.questions },
+    { number: '6', label: t.stats.stages },
+    { number: '8+', label: t.stats.videoLessons },
+    { number: '100%', label: t.stats.online }
   ];
 
   return (
     <div className="about-page">
+      <LanguageToggle language={language} setLanguage={setLanguage} />
+
       {/* Hero Section */}
       <section className="about-hero">
         <Container>
           <Row className="align-items-center">
             <Col lg={6}>
               <h1 className="hero-title">
-                <span className="gradient-text">Master Cybersecurity</span>
+                <span className="gradient-text">{t.heroTitle1}</span>
                 <br />
-                One Stage at a Time
+                {t.heroTitle2}
               </h1>
               <p className="hero-description">
-                A comprehensive Learning Management System designed to take you from cybersecurity basics
-                to advanced expertise through structured, progressive learning stages.
+                {t.heroDescription}
               </p>
               <div className="hero-stats">
                 {stats.map((stat, index) => (
@@ -82,11 +64,9 @@ const About = () => {
         <Container>
           <Row className="justify-content-center text-center mb-5">
             <Col lg={8}>
-              <h2 className="section-title">Our Mission</h2>
+              <h2 className="section-title">{t.missionTitle}</h2>
               <p className="section-description">
-                To empower individuals with essential cybersecurity knowledge and skills through
-                accessible, high-quality education. We believe everyone should understand how to
-                protect themselves and their organizations in the digital world.
+                {t.missionDescription}
               </p>
             </Col>
           </Row>
@@ -96,14 +76,14 @@ const About = () => {
       {/* Features Section */}
       <section className="features-section">
         <Container>
-          <h2 className="section-title text-center mb-5">Why Choose Our Platform?</h2>
+          <h2 className="section-title text-center mb-5">{t.featuresTitle}</h2>
           <Row>
-            {features.map((feature, index) => (
+            {t.features.map((feature, index) => (
               <Col key={index} lg={4} md={6} className="mb-4">
                 <Card className="feature-card h-100">
                   <Card.Body className="text-center">
                     <div className="feature-icon">
-                      <i className={`bi ${feature.icon}`}></i>
+                      <i className={`bi ${featureIcons[index]}`}></i>
                     </div>
                     <h4>{feature.title}</h4>
                     <p>{feature.description}</p>
@@ -118,37 +98,22 @@ const About = () => {
       {/* Learning Path Section */}
       <section className="learning-path-section">
         <Container>
-          <h2 className="section-title text-center mb-5">Your Learning Journey</h2>
+          <h2 className="section-title text-center mb-5">{t.journeyTitle}</h2>
           <div className="learning-path">
-            <div className="path-step">
-              <div className="step-number">1</div>
-              <h4>Initial Assessment</h4>
-              <p>Take a 25-question assessment to determine your starting level</p>
-            </div>
-            <div className="path-arrow">
-              <i className="bi bi-arrow-right"></i>
-            </div>
-            <div className="path-step">
-              <div className="step-number">2</div>
-              <h4>Progressive Stages</h4>
-              <p>Complete Stages 1-4, each with videos and quizzes</p>
-            </div>
-            <div className="path-arrow">
-              <i className="bi bi-arrow-right"></i>
-            </div>
-            <div className="path-step">
-              <div className="step-number">3</div>
-              <h4>Final Assessment</h4>
-              <p>Demonstrate mastery with comprehensive final exam</p>
-            </div>
-            <div className="path-arrow">
-              <i className="bi bi-arrow-right"></i>
-            </div>
-            <div className="path-step">
-              <div className="step-number">4</div>
-              <h4>Certification</h4>
-              <p>Receive your verified cybersecurity certificate</p>
-            </div>
+            {t.journeySteps.map((step, index) => (
+              <React.Fragment key={index}>
+                <div className="path-step">
+                  <div className="step-number">{index + 1}</div>
+                  <h4>{step.title}</h4>
+                  <p>{step.description}</p>
+                </div>
+                {index < t.journeySteps.length - 1 && (
+                  <div className="path-arrow">
+                    <i className="bi bi-arrow-right"></i>
+                  </div>
+                )}
+              </React.Fragment>
+            ))}
           </div>
         </Container>
       </section>
@@ -157,10 +122,10 @@ const About = () => {
       <section className="cta-section">
         <Container>
           <div className="cta-box text-center">
-            <h2>Ready to Start Your Cybersecurity Journey?</h2>
-            <p>Join thousands of learners building their cybersecurity expertise</p>
+            <h2>{t.ctaTitle}</h2>
+            <p>{t.ctaDescription}</p>
             <a href="/register" className="btn btn-light btn-lg">
-              Get Started Today
+              {t.ctaButton}
             </a>
           </div>
         </Container>
