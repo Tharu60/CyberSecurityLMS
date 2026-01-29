@@ -125,6 +125,39 @@ async function initializeDatabase() {
       )
     `);
 
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS GOV_OFFICERS (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        GOV_NIC_NO VARCHAR(20) UNIQUE NOT NULL,
+        Full_Name VARCHAR(255) NOT NULL,
+        Contact_Number VARCHAR(20) NOT NULL,
+        Email VARCHAR(255) UNIQUE NOT NULL,
+        GOV_Institute VARCHAR(255) NOT NULL,
+        Date_Of_Join DATE NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+      )
+    `);
+
+    // Insert sample data for GOV_OFFICERS if table is empty
+    const [rows] = await connection.query('SELECT COUNT(*) as count FROM GOV_OFFICERS');
+    if (rows[0].count === 0) {
+      await connection.query(`
+        INSERT INTO GOV_OFFICERS (GOV_NIC_NO, Full_Name, Contact_Number, Email, GOV_Institute, Date_Of_Join) VALUES
+        ('PMAS/25634', 'Kamal Perera', '0771234567', 'kamal.perera@gov.lk', 'Ministry of Defence', '2020-03-15'),
+        ('DEFN/18742', 'Nimal Silva', '0762345678', 'nimal.silva@gov.lk', 'Sri Lanka Police', '2019-07-22'),
+        ('SLAF/30125', 'Sunil Fernando', '0753456789', 'sunil.fernando@gov.lk', 'Sri Lanka Air Force', '2021-01-10'),
+        ('NAVY/42589', 'Ruwan Jayawardena', '0714567890', 'ruwan.jayawardena@gov.lk', 'Sri Lanka Navy', '2018-11-05'),
+        ('ARMY/55321', 'Chaminda Bandara', '0725678901', 'chaminda.bandara@gov.lk', 'Sri Lanka Army', '2022-06-18'),
+        ('SLPD/67894', 'Priya Kumari', '0776789012', 'priya.kumari@gov.lk', 'Sri Lanka Police Department', '2020-09-30'),
+        ('MOFA/78456', 'Lakshmi Wickramasinghe', '0767890123', 'lakshmi.wickramasinghe@gov.lk', 'Ministry of Foreign Affairs', '2017-04-12'),
+        ('ICTA/89012', 'Ashan Rathnayake', '0758901234', 'ashan.rathnayake@gov.lk', 'ICTA Sri Lanka', '2023-02-28'),
+        ('CERT/91234', 'Dinesh Gunawardena', '0719012345', 'dinesh.gunawardena@gov.lk', 'Sri Lanka CERT', '2021-08-14'),
+        ('TRCL/10567', 'Malini Samaraweera', '0720123456', 'malini.samaraweera@gov.lk', 'Telecommunications Regulatory Commission', '2019-12-01')
+      `);
+      console.log('Sample GOV_OFFICERS data inserted');
+    }
+
     console.log('Database tables initialized');
     connection.release();
   } catch (error) {
